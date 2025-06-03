@@ -1,16 +1,27 @@
 {
   "name": "desafio-luizalabs-vertical-logistica",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Desafio técnico da LuizaLabs - Vertical Logística",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "luizalabs",
+    "logistics",
+    "clean-architecture",
+    "typescript"
+  ],
+  "author": "David Tufi",
   "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "express": "^5.1.0"
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.24",
+    "express": "^4.18.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
   }
 }
