@@ -38,7 +38,7 @@ export class Order {
             userName: this.userName,
             orderId: this.orderId,
             productId: this.productId,
-            value: this.value,
+            value: this.value.toFixed(2),
             date: this.date.toISOString()
         };
     }
