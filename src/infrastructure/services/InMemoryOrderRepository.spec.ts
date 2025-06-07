@@ -28,4 +28,12 @@ describe('InMemoryOrderRepository', () => {
         const userOrders = await repository.findByUserId(999);
         expect(userOrders).toEqual([]);
     });
+
+    it('should find orders by userId', async () => {
+        await repository.save(order);
+        const foundOrders = await repository.findByUserId(1);
+        expect(foundOrders).toHaveLength(1);
+        expect(foundOrders[0].getOrderId()).toBe(123);
+    });
+
 });

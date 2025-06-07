@@ -16,9 +16,10 @@ const upload = multer({ dest: 'uploads/' });
 const orderRepository = new InMemoryOrderRepository();
 const orderController = new OrderController(orderRepository);
 
-app.post('/orders/upload', upload.single('file'), async (req, res) => {
+app.post('/orders/upload', upload.single('file'), async (req, res): Promise<void> => {
     if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
+        res.status(400).json({ error: 'No file uploaded' });
+        return;
     }
 
     try {
@@ -34,4 +35,6 @@ app.get('/orders', (req, res) => orderController.getOrders(req, res));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-}); 
+});
+
+export { app, orderController };

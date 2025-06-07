@@ -19,8 +19,6 @@ export class OrderController {
         try {
             const { order_id, start_date, end_date } = req.query;
 
-            console.log(order_id, start_date, end_date);
-
             const orders = await this.orderRepository.findAll();
 
             const usersMap = new Map<number, any>();
