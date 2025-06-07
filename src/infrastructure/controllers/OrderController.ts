@@ -15,11 +15,12 @@ export class OrderController {
 
         await this.processOrdersUseCase.execute(rawData);
     }
-    async getOrders(_req: Request, res: Response): Promise<void> {
-
-        const { order_id, start_id, end_date } = req.query;
-
+    async getOrders(req: Request, res: Response): Promise<void> {
         try {
+            const { order_id, start_date, end_date } = req.query;
+
+            console.log(order_id, start_date, end_date);
+
             const orders = await this.orderRepository.findAll();
 
             const usersMap = new Map<number, any>();
@@ -31,8 +32,12 @@ export class OrderController {
                 const productId = order.getProductId();
                 const value = Number(order.getValue());
                 const date = order.getDate();
-
                 const formattedDate = date.toISOString().split('T')[0];
+
+                if (order_id && Number(order_id) !== orderId) continue;
+
+                if (start_date && date < new Date(start_date as string)) continue;
+                if (end_date && date > new Date(end_date as string)) continue;
 
                 if (!usersMap.has(userId)) {
                     usersMap.set(userId, {
@@ -61,7 +66,6 @@ export class OrderController {
                     value: value.toFixed(2)
                 });
 
-                // Soma o valor ao total do pedido
                 userOrder.total = (Number(userOrder.total) + value).toFixed(2);
             }
 
