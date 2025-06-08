@@ -155,7 +155,7 @@ Você pode visualizar ou consultar os dados usando ferramentas como:
   sqlite3 src/infrastructure/database/config/database.sqlite
   ```
 
-> **Obs:** Não é necessário instalar o SQLite manualmente, pois o driver já está incluído nas dependências do projeto. Para visualizar o arquivo. É necessário executar o comando **npm run build** primeiramente, para criar o database. Após isso é somente prosseguir com a inserção do arquivo(upload) e o banco de dados criará as tabelas de forma automática.
+> **Obs:** Não é necessário instalar o SQLite manualmente, pois o driver já está incluído nas dependências do projeto. Para visualizar o arquivo, é necessário executar o comando **npm run build** primeiramente, para criar o database. Após isso é somente prosseguir com a inserção do arquivo(upload) e o banco de dados criará as tabelas de forma automática.
 
 ---
 
