@@ -5,14 +5,13 @@ export class ProcessOrdersUseCase {
     constructor(private readonly orderRepository: IOrderRepository) { }
 
     async execute(rawData: string): Promise<void> {
-        // Split the raw data into lines and filter out empty lines
         const lines = rawData.split('\n').filter(line => line.trim());
-
-        // Process each line to create an Order entity
+        const orders: Order[] = [];
         for (const line of lines) {
-            const order = this.parseOrderLine(line);
-            await this.orderRepository.save(order);
+            orders.push(this.parseOrderLine(line));
         }
+        // Save all at once (batch insert)
+        await this.orderRepository.saveMany(orders);
     }
 
     private parseOrderLine(line: string): Order {

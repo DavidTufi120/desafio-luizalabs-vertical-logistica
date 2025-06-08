@@ -1,25 +1,36 @@
 import { Request, Response } from 'express';
 import { ProcessOrdersUseCase } from '../../application/use-cases/ProcessOrdersUseCase';
-import { InMemoryOrderRepository } from '../services/InMemoryOrderRepository';
+import { IOrderRepository } from '../../domain/interfaces/IOrderRepository';
+import fs from 'fs/promises';
 
 export class OrderController {
     private processOrdersUseCase: ProcessOrdersUseCase;
-    private orderRepository: InMemoryOrderRepository;
+    private orderRepository: IOrderRepository;
 
-    constructor(orderRepository: InMemoryOrderRepository) {
+    constructor(orderRepository: IOrderRepository) {
         this.orderRepository = orderRepository;
         this.processOrdersUseCase = new ProcessOrdersUseCase(orderRepository);
     }
 
-    async processOrdersFromText(rawData: string): Promise<void> {
+    async processFile(req: Request, res: Response): Promise<void> {
+        if (!req.file) {
+            res.status(400).json({ error: 'No file uploaded' });
+            return;
+        }
 
-        await this.processOrdersUseCase.execute(rawData);
+        try {
+            const fileContent = await fs.readFile(req.file.path, 'utf-8');
+            await this.processOrdersUseCase.execute(fileContent);
+            res.status(200).json({ message: 'Arquivo TXT processado com sucesso!' });
+        } catch (error) {
+            console.error('Error processing file:', error);
+            res.status(500).json({ error: 'Erro ao processar o arquivo' });
+        }
     }
+
     async getOrders(req: Request, res: Response): Promise<void> {
         try {
             const { order_id, start_date, end_date } = req.query;
-
-            console.log(order_id, start_date, end_date);
 
             const orders = await this.orderRepository.findAll();
 

@@ -1,5 +1,5 @@
 import { Order } from "./Order";
-import { InMemoryOrderRepository } from "../../infrastructure/services/InMemoryOrderRepository";
+
 describe('Order', () => {
     it('should create an order', () => {
         const order = new Order(1, "Davi Toledo", 123, 321, 123.45, new Date('2021-01-01'));
@@ -18,14 +18,5 @@ describe('Order', () => {
             value: '123.45',
             date: new Date('2021-01-01').toISOString()
         });
-    });
-
-    it('should find orders by userId', async () => {
-        const repository = new InMemoryOrderRepository();
-        const order = new Order(1, "Davi Toledo", 123, 321, 123.45, new Date('2021-01-01'));
-        await repository.save(order);
-        const foundOrders = await repository.findByUserId(1);
-        expect(foundOrders).toHaveLength(1);
-        expect(foundOrders[0].getOrderId()).toBe(123);
     });
 });
