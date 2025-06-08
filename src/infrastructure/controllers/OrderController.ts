@@ -17,20 +17,45 @@ export class OrderController {
             res.status(400).json({ error: 'No file uploaded' });
             return;
         }
-
+        if (Array.isArray(req.file)) {
+            res.status(400).json({ error: 'Only one file can be uploaded at a time.' });
+            return;
+        }
         try {
             const fileContent = await fs.readFile(req.file.path, 'utf-8');
+            if (!fileContent.trim()) {
+                await fs.unlink(req.file.path);
+                res.status(400).json({ error: 'Uploaded file is empty' });
+                return;
+            }
             await this.processOrdersUseCase.execute(fileContent);
-            res.status(200).json({ message: 'Arquivo TXT processado com sucesso!' });
-        } catch (error) {
+            await fs.unlink(req.file.path);
+            res.status(200).json({ message: 'TXT file processed successfully' });
+        } catch (error: any) {
             console.error('Error processing file:', error);
-            res.status(500).json({ error: 'Erro ao processar o arquivo' });
+            if (req.file) {
+                await fs.unlink(req.file.path);
+            }
+            res.status(400).json({ error: error.message || 'Error processing file' });
         }
     }
 
     async getOrders(req: Request, res: Response): Promise<void> {
         try {
             const { order_id, start_date, end_date } = req.query;
+
+            if (order_id && isNaN(Number(order_id))) {
+                res.status(400).json({ error: 'order_id must be a number' });
+                return;
+            }
+            if (start_date && isNaN(Date.parse(start_date as string))) {
+                res.status(400).json({ error: 'start_date must be a valid date (YYYY-MM-DD)' });
+                return;
+            }
+            if (end_date && isNaN(Date.parse(end_date as string))) {
+                res.status(400).json({ error: 'end_date must be a valid date (YYYY-MM-DD)' });
+                return;
+            }
 
             const orders = await this.orderRepository.findAll();
 
