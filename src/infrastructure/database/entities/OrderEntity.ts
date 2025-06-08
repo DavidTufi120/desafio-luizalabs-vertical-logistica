@@ -4,23 +4,23 @@ import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 @Unique(['orderId', 'productId'])
 export class OrderEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+      id: number;
 
     @Column()
-    userId: string;
+      userId: string;
 
     @Column()
-    name: string;
+      name: string;
 
     @Column()
-    orderId: string;
+      orderId: string;
 
     @Column()
-    productId: string;
+      productId: string;
 
     @Column()
-    value: number;
+      value: number;
 
     @Column()
-    date: string;
+      date: string;
 } 
