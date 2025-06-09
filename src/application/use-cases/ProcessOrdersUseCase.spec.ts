@@ -3,7 +3,7 @@ import { Order } from '../../domain/entities/Order';
 import { IOrderRepository } from '../../domain/interfaces/IOrderRepository';
 
 interface MockOrderRepository extends Partial<IOrderRepository> {
-    saveMany: jest.Mock;
+  saveMany: jest.Mock;
 }
 
 describe('ProcessOrdersUseCase', () => {
@@ -27,7 +27,7 @@ describe('ProcessOrdersUseCase', () => {
   });
 
   it('should call saveMany if the repository implements it', async () => {
-    // Arrange
+
     const mockSaveMany = jest.fn();
     const mockRepository: MockOrderRepository = {
       saveMany: mockSaveMany,
@@ -39,12 +39,10 @@ describe('ProcessOrdersUseCase', () => {
       '0000000002                          Medeiros00000123450000000111256.2420201201',
     ].join('\n');
 
-    // Act
     await useCase.execute(rawData);
 
-    // Assert
     expect(mockSaveMany).toHaveBeenCalledTimes(1);
-    // Checa se os objetos Order foram criados corretamente
+
     const orders = mockSaveMany.mock.calls[0][0];
     expect(orders).toHaveLength(2);
     expect(orders[0]).toBeInstanceOf(Order);

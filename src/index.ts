@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use('/api', orderRoutes);
 
-// Middleware de tratamento de erro do Multer
+// Error handling middleware
 app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
   if (err instanceof multer.MulterError) {
     if (err.code === 'LIMIT_UNEXPECTED_FILE') {
