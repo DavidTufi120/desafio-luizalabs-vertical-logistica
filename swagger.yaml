@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: API Vertical Logística - LuizaLabs
+  version: 1.0.0
+  description: API para upload e consulta de pedidos normalizados a partir de arquivo legado.
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /upload:
+    post:
+      summary: Upload de arquivo de pedidos legado
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Upload e processamento realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Erro no upload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /orders:
+    get:
+      summary: Consulta de pedidos normalizados
+      parameters:
+        - in: query
+          name: order_id
+          schema:
+            type: integer
+          required: false
+          description: Filtrar por ID do pedido
+        - in: query
+          name: start_date
+          schema:
+            type: string
+            format: date
+          required: false
+          description: Data inicial (YYYY-MM-DD)
+        - in: query
+          name: end_date
+          schema:
+            type: string
+            format: date
+          required: false
+          description: Data final (YYYY-MM-DD)
+      responses:
+        '200':
+          description: Lista de pedidos normalizados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                    name:
+                      type: string
+                    orders:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          order_id:
+                            type: integer
+                          total:
+                            type: string
+                          date:
+                            type: string
+                          products:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                product_id:
+                                  type: integer
+                                value:
+                                  type: string
+        '400':
+          description: Erro de filtro
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string 

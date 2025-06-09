@@ -66,12 +66,13 @@ A API estará disponível em `http://localhost:3000`.
 
 ### 2. Consulta de pedidos
 **GET** `/api/orders`
-- Parâmetros opcionais:
-  - `order_id` (número)
-  - `start_date` (YYYY-MM-DD)
-  - `end_date` (YYYY-MM-DD)
 
-**Exemplo de resposta:**
+Parâmetros de query opcionais:
+- `order_id`: número do pedido
+- `start_date`: data inicial (YYYY-MM-DD)
+- `end_date`: data final (YYYY-MM-DD)
+
+**Exemplos:**
 ```json
 [
   {
@@ -179,6 +180,20 @@ A tabela principal é `orders`, onde ficam armazenados os pedidos processados a 
 - O upload aceita apenas um arquivo `.txt` por vez.
 - Os filtros de busca são opcionais e podem ser combinados.
 - O projeto pode ser facilmente adaptado para outros bancos ou persistências.
+
+---
+
+## Documentação Interativa (Swagger)
+
+A API conta com uma documentação interativa e profissional utilizando Swagger (OpenAPI 3.0).
+
+- Acesse em: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- Você pode visualizar todos os endpoints, parâmetros, exemplos de resposta e até testar as requisições diretamente pelo navegador.
+- O arquivo de especificação está disponível em `swagger.yaml` na raiz do projeto.
+
+**Exemplo de tela:**
+
+![Swagger UI](docs/swagger_example.png)
 
 ---
 

@@ -4,11 +4,16 @@ import { AppDataSource } from './infrastructure/database/config/typeorm.config';
 import { orderRoutes } from './infrastructure/routes/orderRoutes';
 import multer from 'multer';
 import { logger } from './infrastructure/utils/logger';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 const app = express();
 
 app.use(express.json());
 app.use('/api', orderRoutes);
+
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error handling middleware
 app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
