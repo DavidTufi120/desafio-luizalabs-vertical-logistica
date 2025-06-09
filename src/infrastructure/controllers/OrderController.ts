@@ -5,19 +5,19 @@ import fs from 'fs/promises';
 import { logger } from '../utils/logger';
 
 interface UserOrder {
-    order_id: number;
-    total: string;
-    date: string;
-    products: Array<{
-        product_id: number;
-        value: string;
-    }>;
+  order_id: number;
+  total: string;
+  date: string;
+  products: Array<{
+    product_id: number;
+    value: string;
+  }>;
 }
 
 interface User {
-    user_id: number;
-    name: string;
-    orders: UserOrder[];
+  user_id: number;
+  name: string;
+  orders: UserOrder[];
 }
 
 export class OrderController {

@@ -1,11 +1,11 @@
 export class Order {
   constructor(
-        private readonly userId: number,
-        private readonly userName: string,
-        private readonly orderId: number,
-        private readonly productId: number,
-        private readonly value: number,
-        private readonly date: Date,
+    private readonly userId: number,
+    private readonly userName: string,
+    private readonly orderId: number,
+    private readonly productId: number,
+    private readonly value: number,
+    private readonly date: Date,
   ) { }
 
   getUserId(): number {
@@ -33,13 +33,13 @@ export class Order {
   }
 
   toJSON(): {
-        userId: number;
-        userName: string;
-        orderId: number;
-        productId: number;
-        value: string;
-        date: string;
-        } {
+    userId: number;
+    userName: string;
+    orderId: number;
+    productId: number;
+    value: string;
+    date: string;
+    } {
     return {
       userId: this.userId,
       userName: this.userName,
